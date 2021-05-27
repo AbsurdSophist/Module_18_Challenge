@@ -1,32 +1,8 @@
-# PyChain Ledger
-################################################################################
-# You’ll make the following updates to the provided Python file for this
-# Challenge, which already contains the basic `PyChain` ledger structure that
-# you created throughout the module:
-
-# Step 1: Create a Record Data Class
-# * Create a new data class named `Record`. This class will serve as the
-# blueprint for the financial transaction records that the blocks of the ledger
-# will store.
-
-# Step 2: Modify the Existing Block Data Class to Store Record Data
-# * Change the existing `Block` data class by replacing the generic `data`
-# attribute with a `record` attribute that’s of type `Record`.
-
-# Step 3: Add Relevant User Inputs to the Streamlit Interface
-# * Create additional user input areas in the Streamlit application. These
-# input areas should collect the relevant information for each financial record
-# that you’ll store in the `PyChain` ledger.
-
-# Step 4: Test the PyChain Ledger by Storing Records
-# * Test your complete `PyChain` ledger.
-
-################################################################################
-# Imports
+# Import requried libraries
 import streamlit as st
+from datetime import datetime
 from dataclasses import dataclass
 from typing import Any, List
-import datetime as datetime
 import pandas as pd
 import hashlib
 
@@ -37,24 +13,12 @@ class Record:
     receiver: str
     amount: float
 
-
-################################################################################
-# Step 2:
-# Modify the Existing Block Data Class to Store Record Data
-
-# Rename the `data` attribute in your `Block` class to `record`, and then set
-# it to use an instance of the new `Record` class that you created in the
-# previous section. To do so, complete the following steps:
-# 1. In the `Block` class, rename the `data` attribute to `record`.
-# 2. Set the data type of the `record` attribute to `Record`.
-
-
 @dataclass
 class Block:
     record: Record
     creator_id: int
     prev_hash: str = 0
-    timestamp: str = datetime.datetime.utcnow().strftime("%H:%M:%S")
+    timestamp: str = datetime.utcnow().strftime("%H:%M:%S")
     nonce: str = 0
 
     def hash_block(self):
@@ -144,8 +108,8 @@ if st.button("Add Block"):
     prev_block_hash = prev_block.hash_block()
 
     new_block = Block(
-        record = Record(sender = sender_id, receiver = receiver_id, amount = amount)
-        creator_id=42,
+        record = Record(sender = sender_id, receiver = receiver_id, amount = amount),
+        creator_id = 42,
         prev_hash=prev_block_hash
     )
 
